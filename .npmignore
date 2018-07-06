@@ -1,0 +1,7 @@
+.vscode/
+src/
+.eslintrc.json
+.gitignore
+rollup.config.js
+yarn-error.log
+yarn.lock
