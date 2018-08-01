@@ -1,6 +1,6 @@
 {
   "name": "@gct256/image-utils",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "my image utils.",
   "main": "index",
   "types": "index.d.ts",

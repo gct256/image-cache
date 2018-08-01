@@ -540,6 +540,31 @@ async function trim(id, left, right, top, bottom) {
   return makeCache((await makeImage(context, width, height)));
 }
 
+async function rotate(id, radian) {
+  const image = get(id);
+  const dx = image.naturalWidth / image.width;
+  const dy = image.naturalHeight / image.height;
+  const { width, height } = image;
+  const cos = Math.cos(radian);
+  const sin = Math.sin(radian);
+  const x1 = cos * width;
+  const y1 = sin * width;
+  const x2 = -sin * height;
+  const y2 = cos * height;
+  const x3 = x1 + x2;
+  const y3 = y1 + y2;
+  const w = Math.max(0, x1, x2, x3) - Math.min(0, x1, x2, x3);
+  const h = Math.max(0, y1, y2, y3) - Math.min(0, y1, y2, y3);
+  const iw = Math.ceil(w);
+  const ih = Math.ceil(h);
+  const context = createContext(iw * dx, ih * dy);
+  context.translate(w / 2 * dx, h / 2 * dy);
+  context.rotate(radian);
+  context.translate(width / -2 * dx, height / -2 * dy);
+  context.drawImage(image, 0, 0);
+  return makeCache((await makeImage(context, iw, ih)));
+}
+
 exports.createContext = createContext;
 exports.load = load;
 exports.readFromFile = readFromFile;
@@ -547,3 +572,4 @@ exports.get = get;
 exports.clone = clone;
 exports.resize = resize;
 exports.trim = trim;
+exports.rotate = rotate;
