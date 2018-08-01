@@ -28,4 +28,6 @@ declare namespace ImageUtils {
     top: number,
     bottom: number
   ): Promise<string>
+
+  export function rotate(id: string, radian: number): Promise<string>
 }
