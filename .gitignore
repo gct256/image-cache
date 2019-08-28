@@ -121,3 +121,12 @@ Temporary Items
 
 
 # End of https://www.gitignore.io/api/macos
+# jest snapshot
+__snapshots__
+
+# 出力ファイル
+dist/*.js
+/index.js
+/index.mjs
+/types
+/.rpt2_cache

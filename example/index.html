@@ -10,13 +10,25 @@
       background: #eee
     }
 
-    img {
-      display: inline-block;
-      box-shadow: 0 0 16px rgb(0, 0, 0, 0.1)
+    .image {
+      display: flex;
+      margin-bottom: 1em;
+      padding: 1em;
+      border: 1px solid #888;
     }
 
-    img+img {
-      margin-left: 1em;
+    .image p {
+      margin: 0 0 0 1em;
+      white-space: pre-wrap;
+    }
+
+    .image p::first-line {
+      font-weight: bold;
+    }
+
+    img {
+      display: block;
+      box-shadow: 0 0 16px rgb(0, 0, 0, 0.1)
     }
   </style>
 </head>

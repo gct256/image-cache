@@ -13,7 +13,7 @@
   "editor.wordWrapColumn": 80,
   "editor.wrappingIndent": "none",
   //
-  "files.autoGuessEncoding": true,
+  "files.autoGuessEncoding": false,
   "files.autoSave": "off",
   "files.encoding": "utf8",
   "files.eol": "\n",
@@ -24,7 +24,11 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "**/node_modules": true
+    "**/node_modules": true,
+    "dist/**/*.js": true,
+    "types": true,
+    "coverage": true,
+    ".rpt2_cache": true
   },
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
@@ -35,14 +39,50 @@
   "typescript.validate.enable": true,
   //
   "eslint.enable": true,
-  "eslint.autoFixOnSave": false,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    { "language": "javascript", "autoFix": true },
+    { "language": "javascriptreact", "autoFix": true },
+    { "language": "typescript", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true }
+  ],
   //
-  "prettier.eslintIntegration": true,
+  "prettier.eslintIntegration": false,
+  "prettier.tslintIntegration": false,
+  "prettier.disableLanguages": [
+    "vue",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   //
-  "flow.enabled": false,
-  "flow.runOnAllFiles": false,
-  "flow.runOnEdit": true,
-  "flow.stopFlowOnExit": true,
-  //
-  "tslint.enable": false
+  "highlight.regexFlags": "mgi",
+  "highlight.regexes": {
+    "^(\\+.*)": {
+      "filterFileRegex": ".*\\.snap",
+      "decorations": [
+        {
+          "overviewRulerColor": "#006600",
+          "backgroundColor": "#006600"
+        }
+      ]
+    },
+    "^(\\-.*)": {
+      "filterFileRegex": ".*\\.snap",
+      "decorations": [
+        {
+          "overviewRulerColor": "#660000",
+          "backgroundColor": "#660000"
+        }
+      ]
+    }
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

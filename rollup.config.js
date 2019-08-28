@@ -1,26 +1,44 @@
-import babel from 'rollup-plugin-babel'
-import commonjs from 'rollup-plugin-commonjs'
-import nodeResolve from 'rollup-plugin-node-resolve'
-import nodeBuiltins from 'rollup-plugin-node-builtins'
+import typescript2 from 'rollup-plugin-typescript2';
+import autoExternal from 'rollup-plugin-auto-external';
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 const base = {
-  input: './src/ImageUtils.js',
-  plugins: [babel(), commonjs(), nodeResolve(), nodeBuiltins()]
-}
+  input: './src/index.ts',
+  plugins: [
+    autoExternal(),
+    typescript2({
+      tsconfigOverride: {
+        compilerOptions: {
+          declaration: isProduction,
+          declarationDir: './types',
+        },
+        include: ['./src/index.ts', './src/missing.d.ts'],
+        exclude: ['./node_modules/**/*.*'],
+      },
+      useTsconfigDeclarationDir: true,
+    }),
+  ],
+};
 
-export default [
+const targets = [
   {
     ...base,
     output: {
       file: './index.js',
-      format: 'cjs'
-    }
+      format: 'cjs',
+    },
   },
-  {
+];
+
+if (isProduction) {
+  targets.push({
     ...base,
     output: {
       file: './index.mjs',
-      format: 'es'
-    }
-  }
-]
+      format: 'es',
+    },
+  });
+}
+
+export default targets;
