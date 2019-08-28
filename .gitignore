@@ -130,3 +130,4 @@ dist/*.js
 /index.mjs
 /types
 /.rpt2_cache
+/example/*.js
