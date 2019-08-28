@@ -6,3 +6,9 @@ rollup.config.js
 yarn-error.log
 yarn.lock
 example/
+.rpt2_cache
+.eslintignore
+prettier.config.js
+rollup.config.example.js
+tsconfig.json
+.eslintrc.yml
