@@ -165,10 +165,14 @@ export const ImageUtils = {
    */
   async load(src: string): Promise<string> {
     const image = await loadImage(src);
-    const { width, height } = image;
+    const { naturalWidth, naturalHeight } = image;
 
     return makeCache(
-      await makeImage(copyImage(image, width, height), width, height),
+      await makeImage(
+        copyImage(image, naturalWidth, naturalHeight),
+        naturalWidth,
+        naturalHeight,
+      ),
     );
   },
 
@@ -249,9 +253,8 @@ export const ImageUtils = {
     bottom: number,
   ): Promise<string> {
     const image = ImageUtils.get(id);
-    const ratio = getPixelRatioAsInteger();
-    const width = image.width * ratio - left - right;
-    const height = image.height * ratio - top - bottom;
+    const width = image.naturalWidth - left - right;
+    const height = image.naturalHeight - top - bottom;
 
     if (width <= 0 || height <= 0) throw new Error('cannot trim to empty');
 
@@ -272,14 +275,13 @@ export const ImageUtils = {
    */
   async rotate(id: string, radian: number): Promise<string> {
     const image = ImageUtils.get(id);
-    const ratio = getPixelRatioAsInteger();
-    const { width, height } = image;
+    const { naturalWidth, naturalHeight } = image;
     const cos = Math.cos(radian);
     const sin = Math.sin(radian);
-    const x1 = cos * width * ratio;
-    const y1 = sin * width * ratio;
-    const x2 = -sin * height * ratio;
-    const y2 = cos * height * ratio;
+    const x1 = cos * naturalWidth;
+    const y1 = sin * naturalWidth;
+    const x2 = -sin * naturalHeight;
+    const y2 = cos * naturalHeight;
     const x3 = x1 + x2;
     const y3 = y1 + y2;
     const w = Math.max(0, x1, x2, x3) - Math.min(0, x1, x2, x3);
@@ -290,7 +292,7 @@ export const ImageUtils = {
 
     context.translate(w / 2, h / 2);
     context.rotate(radian);
-    context.translate((width * ratio) / -2, (height * ratio) / -2);
+    context.translate(naturalWidth / -2, naturalHeight / -2);
     context.drawImage(image, 0, 0);
 
     return makeCache(await makeImage(context, iw, ih));
